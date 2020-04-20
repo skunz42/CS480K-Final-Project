@@ -3,20 +3,18 @@ import json
 import urllib
 import sys
 
-'''***********************************************
-                    calcCoords
-    purpose:
-        calculates the coordinates to use when
-        searching. Updates an array of tuples
-        storing coordinates
-    params:
-        key - API authentication key
-        coords - array of coordinates
-        city - city being searched
-    return:
-        None
-***********************************************'''
 def calcCoords(key, coords, city):
+    """
+    Parameters
+    ----------
+    key : str?
+        API authentication key
+    coords : list of float tuples
+        coordinates to be searched on
+    city : str
+        city and state name
+    """
+
     gmaps = googlemaps.Client(key=key) #authentication
     geocode_result = gmaps.geocode(city) #gets results for city
     nelat = geocode_result[0]['geometry']['bounds']['northeast']['lat'] #northeast latitude
@@ -35,10 +33,38 @@ def calcCoords(key, coords, city):
         templng = swlng
         templat += km # ~ 1 km
 
-'''***********************************************
-                    Main
-***********************************************'''
+def writeToFile(coords, city, state):
+    """
+    Parameters
+    ----------
+    coords : list of float tuples
+        coordinates to be searched on
+    city : str
+        city name
+    state : str
+        state name
+    """
+
+    fileCount = 0
+    inFileCount = 0
+    currentFn = "coords/" + city + state + str(fileCount)
+    f = open(currentFn, "w")
+    for c in coords:
+        print(c)
+        f.write(''.join(str(c)))
+        f.write("\n")
+        inFileCount += 1
+        if inFileCount > 4:
+            inFileCount = 0
+            fileCount += 1
+            f.close()
+            f = open("coords/" + city + state + str(fileCount), "w")
+
 def main():
+    if len(sys.argv) != 3:
+        print("Enter in format python <city> <state>")
+        sys.exit(1)
+        
     city = str(sys.argv[1])
     state = str(sys.argv[2])
     citystate = city + ", " + state
@@ -47,5 +73,5 @@ def main():
     keyval = credsfile.read()
     coords = []
     calcCoords(keyval, coords, citystate)
-    print(coords)
+    writeToFile(coords, city, state)
 main()
