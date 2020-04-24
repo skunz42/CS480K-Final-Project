@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 
-MAINTAINER KiwenLau <kiwenlau@gmail.com>
+MAINTAINER Sean Kunz, forked from KiwenLau <kiwenlau@gmail.com>
 
 WORKDIR /root
 
@@ -27,6 +27,11 @@ RUN mkdir -p ~/hdfs/namenode && \
     mkdir $HADOOP_HOME/logs
 
 COPY config/* /tmp/
+
+# install pip
+RUN apt-get install -y python3-pip && \
+    pip3 install virtualenv && \
+    pip3 install pathlib2
 
 RUN mv /tmp/ssh_config ~/.ssh/config && \
     mv /tmp/hadoop-env.sh /usr/local/hadoop/etc/hadoop/hadoop-env.sh && \
