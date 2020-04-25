@@ -54,7 +54,7 @@ def writeToFile(coords, city, state):
         f.write(''.join(str(c)))
         f.write("\n")
         inFileCount += 1
-        if inFileCount > 4:
+        if inFileCount > 14:
             inFileCount = 0
             fileCount += 1
             f.close()
@@ -69,7 +69,7 @@ def main():
     state = str(sys.argv[2])
     citystate = city + ", " + state
 
-    credsfile = open("../../Geo-Credentials/creds.txt", "r")
+    credsfile = open("creds.txt", "r")
     keyval = credsfile.read()
     coords = []
     calcCoords(keyval, coords, citystate)
