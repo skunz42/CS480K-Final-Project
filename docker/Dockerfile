@@ -28,11 +28,6 @@ RUN mkdir -p ~/hdfs/namenode && \
 
 COPY config/* /tmp/
 
-# install pip
-RUN apt-get install -y python3-pip && \
-    pip3 install virtualenv && \
-    pip3 install pathlib2
-
 RUN mv /tmp/ssh_config ~/.ssh/config && \
     mv /tmp/hadoop-env.sh /usr/local/hadoop/etc/hadoop/hadoop-env.sh && \
     mv /tmp/hdfs-site.xml $HADOOP_HOME/etc/hadoop/hdfs-site.xml && \ 
@@ -42,7 +37,13 @@ RUN mv /tmp/ssh_config ~/.ssh/config && \
     mv /tmp/slaves $HADOOP_HOME/etc/hadoop/slaves && \
     mv /tmp/start-hadoop.sh ~/start-hadoop.sh && \
     mv /tmp/run-wordcount.sh ~/run-wordcount.sh && \
-    mv /tmp/run-wc.sh ~/run-wc.sh
+    mv /tmp/run-wc.sh ~/run-wc.sh && \
+    mv /tmp/requirements.txt ~/requirements.txt && \
+    mv /tmp/test.py ~/test.py
+
+# install pip
+RUN apt-get install -y python3-pip && \
+    pip3 install -r requirements.txt
 
 RUN chmod +x ~/start-hadoop.sh && \
     chmod +x ~/run-wordcount.sh && \
