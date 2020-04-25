@@ -13,8 +13,13 @@ RUN wget https://github.com/kiwenlau/compile-hadoop/releases/download/2.7.2/hado
     mv hadoop-2.7.2 /usr/local/hadoop && \
     rm hadoop-2.7.2.tar.gz
 
+#RUN wget https://archive.apache.org/dist/hadoop/common/hadoop-3.2.0/hadoop-3.2.0.tar.gz && \
+#    tar -xzvf hadoop-3.2.0.tar.gz && \
+#    mv hadoop-3.2.0 /usr/local/hadoop && \
+#    rm hadoop-3.2.0.tar.gz
+
 # set environment variable
-ENV JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 
 ENV HADOOP_HOME=/usr/local/hadoop 
 ENV PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin 
 
@@ -24,7 +29,8 @@ RUN ssh-keygen -t rsa -f ~/.ssh/id_rsa -P '' && \
 
 RUN mkdir -p ~/hdfs/namenode && \ 
     mkdir -p ~/hdfs/datanode && \
-    mkdir $HADOOP_HOME/logs
+    mkdir $HADOOP_HOME/logs && \
+    mkdir ~/coords
 
 COPY config/* /tmp/
 
@@ -39,11 +45,18 @@ RUN mv /tmp/ssh_config ~/.ssh/config && \
     mv /tmp/run-wordcount.sh ~/run-wordcount.sh && \
     mv /tmp/run-wc.sh ~/run-wc.sh && \
     mv /tmp/requirements.txt ~/requirements.txt && \
-    mv /tmp/test.py ~/test.py
+    mv /tmp/mapper.py ~/mapper.py && \
+    mv /tmp/reducer.py ~/reducer.py && \
+    mv /tmp/getCoords.py ~/getCoords.py && \
+    mv /tmp/creds.txt ~/creds.txt
 
 # install pip
 RUN apt-get install -y python3-pip && \
-    pip3 install -r requirements.txt
+    #pip3 install setuptools --upgrade && \
+    #pip3 install -r requirements.txt
+    apt-get install -y python3.5 && \
+    python3.5 -m pip install setuptools==41.6.0 && \
+    python3.5 -m pip install -r requirements.txt
 
 RUN chmod +x ~/start-hadoop.sh && \
     chmod +x ~/run-wordcount.sh && \
