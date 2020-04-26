@@ -41,7 +41,7 @@ for line in sys.stdin:
 if current_word == word:
     print '%s\t%s' % (current_word, current_count)'''
 
-credsfile = open("mdbcreds.txt", "r")
+credsfile = open("dbcreds.txt", "r")
 key = credsfile.read()
 client = pymongo.MongoClient(key)
 db = client.CS480KFP
