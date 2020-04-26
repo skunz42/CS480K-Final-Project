@@ -159,7 +159,8 @@ def iterJson(place):
         "Address": place['vicinity'],
         "Rating": place['rating'],
         "Num Ratings": place['user_ratings_total'],
-        "State": state
+        "State": state,
+        "City": place["vicinity"].split(',')[-1].lstrip()
     }
     return x
 
