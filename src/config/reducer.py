@@ -3,8 +3,10 @@
 
 from operator import itemgetter
 import sys
+import json
+import pymongo
 
-current_word = None
+'''current_word = None
 current_count = 0
 word = None
 
@@ -37,4 +39,13 @@ for line in sys.stdin:
 
 # do not forget to output the last word if needed!
 if current_word == word:
-    print '%s\t%s' % (current_word, current_count)
+    print '%s\t%s' % (current_word, current_count)'''
+
+credsfile = open("mdbcreds.txt", "r")
+key = credsfile.read()
+client = pymongo.MongoClient(key)
+db = client.CS480KFP
+collection = db.stores
+
+for line in sys.stdin:
+    print(json.loads(line)["Address"])
