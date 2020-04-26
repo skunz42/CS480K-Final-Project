@@ -8,11 +8,11 @@
 	<body>
 		<h1>Welcome to the "Food Desert Identifier" please follow the instructions below:</h1>
 		<p>Fill out the form below with the city and state abreviation of the loction of interest.<br /> Then click "Submit"</p>
-		<form target="_blank" action="TODO" method="POST">
+		<form target="_blank" action="./server.py" method="POST">
 			<label for="city_name">City Name:</label>
-			<input type="text" id="city_name" name="city_name"><br>
+			<input type="string" id="city_name" name="city_name"><br>
 			<label for="state_abrv">State Abreviation:</label>
-			<input type="text" id="state_abrv" name="state_abrv"><br>
+			<input type="string" id="state_abrv" name="state_abrv"><br>
 			<input onclick="window.location.href = './html/result.html';" type="submit" value="Submit" />
 		</form>
 	</body>
