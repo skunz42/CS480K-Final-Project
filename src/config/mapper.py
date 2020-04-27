@@ -6,6 +6,7 @@ import json
 import urllib
 import csv
 import pymongo
+import os
 from os import listdir
 from os.path import isfile, join
 
@@ -149,9 +150,9 @@ def iterJson(place):
     return x
 
 def scrapeData():
-    #credsfile = open("creds.txt", "r")
+    #credsfile = open("creds/creds.txt", "r")
     #keyval = credsfile.read()
-    keyval = "AIzaSyChGUgzdIjg3snjvEsni9QzhHjLh42gzOY"
+    keyval = os.environ.get("GOOGLE_KEY")
     gplaces = []
     for line in sys.stdin:
         coords = eval(line)
@@ -161,15 +162,6 @@ def scrapeData():
                 storeInfo = iterJson(place)
                 gplaces.append(storeInfo)
     return gplaces
-
-'''def calcCityState():
-    mypath = "./coords/"
-    files = [f for f in listdir(mypath) if isfile(join(mypath, f))]
-
-    fn = files[-1]
-    city = fn[:len(fn)-3]
-    state = fn[len(fn)-3:len(fn)-1]
-    return (city, state)'''
 
 def main():
     #city, state = calcCityState()

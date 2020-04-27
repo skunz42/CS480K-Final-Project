@@ -13,13 +13,8 @@ RUN wget https://github.com/kiwenlau/compile-hadoop/releases/download/2.7.2/hado
     mv hadoop-2.7.2 /usr/local/hadoop && \
     rm hadoop-2.7.2.tar.gz
 
-#RUN wget https://archive.apache.org/dist/hadoop/common/hadoop-3.2.0/hadoop-3.2.0.tar.gz && \
-#    tar -xzvf hadoop-3.2.0.tar.gz && \
-#    mv hadoop-3.2.0 /usr/local/hadoop && \
-#    rm hadoop-3.2.0.tar.gz
-
 # set environment variable
-ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 
+ENV JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 
 ENV HADOOP_HOME=/usr/local/hadoop 
 ENV PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin 
 
@@ -30,7 +25,8 @@ RUN ssh-keygen -t rsa -f ~/.ssh/id_rsa -P '' && \
 RUN mkdir -p ~/hdfs/namenode && \ 
     mkdir -p ~/hdfs/datanode && \
     mkdir $HADOOP_HOME/logs && \
-    mkdir ~/coords
+    mkdir ~/coords && \
+    mkdir ~/creds
 
 COPY config/* /tmp/
 
@@ -48,12 +44,12 @@ RUN mv /tmp/ssh_config ~/.ssh/config && \
     mv /tmp/mapper.py ~/mapper.py && \
     mv /tmp/reducer.py ~/reducer.py && \
     mv /tmp/getCoords.py ~/getCoords.py && \
-    mv /tmp/creds.txt ~/creds.txt
+    mv /tmp/creds.txt ~/creds/creds.txt && \
+    mv /tmp/dbcreds.txt ~/creds/dbcreds.txt && \
+    mv /tmp/set_vars.sh ~/set_vars.sh
 
 # install pip
 RUN apt-get install -y python3-pip && \
-    #pip3 install setuptools --upgrade && \
-    #pip3 install -r requirements.txt
     apt-get install -y python3.5 && \
     python3.5 -m pip install setuptools==41.6.0 && \
     python3.5 -m pip install -r requirements.txt
@@ -64,7 +60,8 @@ RUN chmod +x ~/start-hadoop.sh && \
     chmod +x $HADOOP_HOME/sbin/start-yarn.sh && \
     chmod +x ~/run-wc.sh && \
     chmod +x ~/mapper.py && \
-    chmod +x ~/reducer.py
+    chmod +x ~/reducer.py && \
+    chmod +x ~/set_vars.sh
 
 # format namenode
 RUN /usr/local/hadoop/bin/hdfs namenode -format

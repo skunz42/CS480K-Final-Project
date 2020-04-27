@@ -68,7 +68,7 @@ def main():
     state = str(sys.argv[2])
     citystate = city + ", " + state
 
-    credsfile = open("creds.txt", "r")
+    credsfile = open("creds/creds.txt", "r")
     keyval = credsfile.read()
     coords = []
     calcCoords(keyval, coords, citystate)

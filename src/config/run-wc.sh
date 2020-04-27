@@ -6,9 +6,12 @@ python3.5 getCoords.py Binghamton NY
 
 # create input directory on HDFS
 hadoop fs -mkdir -p coords
+hadoop fs -mkdir -p creds
 
 # put input files to HDFS
 hdfs dfs -put ./coords/* coords
+
+hdfs dfs -put ./creds/* creds
 
 # run wordcount 
 #hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/sources/hadoop-mapreduce-examples-2.7.2-sources.jar org.apache.hadoop.examples.WordCount input output
