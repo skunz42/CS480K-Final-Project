@@ -15,10 +15,7 @@ sudo docker run -itd \
                 --hostname hadoop-master \
                 kiwenlau/hadoop:1.0 &> /dev/null
 
-sudo docker cp ../test/mapper.py hadoop-master:/root/mapper.py
-sudo docker cp ../test/reducer.py hadoop-master:/root/reducer.py
-sudo docker cp ../test/tv.txt hadoop-master:/root/tv.txt
-
+sudo docker cp ./config/dbcreds.txt hadoop-master:/root/dbcreds.txt
 
 # start hadoop slave container
 i=1
