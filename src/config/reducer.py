@@ -4,11 +4,11 @@ from operator import itemgetter
 import sys
 import json
 import pymongo
+import os
 
 def main():
-    #credsfile = open("dbcreds.txt", "r")
-    #key = credsfile.read()
-    key =  "mongodb+srv://emoelle2:watson@cs480kfp-xgix9.gcp.mongodb.net/test?retryWrites=true&w=majority"
+    #credsfile = open("creds/dbcreds.txt", "r")
+    key = os.environ.get("DB_KEY");
     client = pymongo.MongoClient(key, w=1)
     db = client.CS480KFP
     collection = db.stores
