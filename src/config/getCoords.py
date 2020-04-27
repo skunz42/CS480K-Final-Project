@@ -50,7 +50,6 @@ def writeToFile(coords, city, state):
     currentFn = "coords/" + city + state + str(fileCount)
     f = open(currentFn, "w")
     for c in coords:
-        print(c)
         f.write(''.join(str(c)))
         f.write("\n")
         inFileCount += 1

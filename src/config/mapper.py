@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.5
 """mapper.py"""
 
 import sys
@@ -9,21 +8,6 @@ import csv
 import pymongo
 from os import listdir
 from os.path import isfile, join
-
-# input comes from STDIN (standard input)
-'''for line in sys.stdin:
-    # remove leading and trailing whitespace
-    line = line.strip()
-    # split the line into words
-    words = line.split()
-    # increase counters
-    for word in words:
-        # write the results to STDOUT (standard output);
-        # what we output here will be the input for the
-        # Reduce step, i.e. the input for reducer.py
-        #
-        # tab-delimited; the trivial word count is 1
-        print '%s\t%s' % (word, 1)'''
 
 def findPlace(lat, lng, radius, kw, key):
     #making the url
@@ -165,32 +149,43 @@ def iterJson(place):
     return x
 
 def scrapeData():
-    credsfile = open("creds.txt", "r")
-    keyval = credsfile.read()
+    #credsfile = open("creds.txt", "r")
+    #keyval = credsfile.read()
+    keyval = "AIzaSyChGUgzdIjg3snjvEsni9QzhHjLh42gzOY"
     gplaces = []
     for line in sys.stdin:
         coords = eval(line)
-        gsearch = findPlace(float(coords[0]), float(coords[1]), 1000, 'grocery', keyval)
+        gsearch = findPlace(coords[0], coords[1], 1000, 'grocery', keyval)
         if gsearch['status'] == 'OK':
             for place in gsearch['results']:
                 storeInfo = iterJson(place)
                 gplaces.append(storeInfo)
     return gplaces
 
-def calcCityState():
+'''def calcCityState():
     mypath = "./coords/"
     files = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
     fn = files[-1]
     city = fn[:len(fn)-3]
     state = fn[len(fn)-3:len(fn)-1]
-    return (city, state)
+    return (city, state)'''
 
 def main():
-    city, state = calcCityState()
+    #city, state = calcCityState()
+    city = "Binghamton"
+    state = "NY"
     citystate = city + ", " + state
     stores = scrapeData()
     for s in stores:
         #print(s)
         print(json.dumps(s))
-main()
+
+if __name__ == "__main__":
+    main()
+
+'''
+
+for line in sys.stdin:
+    print("Hello")
+'''

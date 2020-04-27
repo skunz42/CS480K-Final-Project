@@ -62,7 +62,9 @@ RUN chmod +x ~/start-hadoop.sh && \
     chmod +x ~/run-wordcount.sh && \
     chmod +x $HADOOP_HOME/sbin/start-dfs.sh && \
     chmod +x $HADOOP_HOME/sbin/start-yarn.sh && \
-    chmod +x ~/run-wc.sh
+    chmod +x ~/run-wc.sh && \
+    chmod +x ~/mapper.py && \
+    chmod +x ~/reducer.py
 
 # format namenode
 RUN /usr/local/hadoop/bin/hdfs namenode -format
