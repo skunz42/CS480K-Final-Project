@@ -2,6 +2,7 @@ import googlemaps
 import json
 import urllib
 import sys
+import os
 
 def calcCoords(key, coords, city):
     """
@@ -68,8 +69,7 @@ def main():
     state = str(sys.argv[2])
     citystate = city + ", " + state
 
-    credsfile = open("creds/creds.txt", "r")
-    keyval = credsfile.read()
+    keyval = os.environ.get("GOOGLE_KEY")
     coords = []
     calcCoords(keyval, coords, citystate)
     writeToFile(coords, city, state)

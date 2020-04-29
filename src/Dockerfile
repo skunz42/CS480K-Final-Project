@@ -38,8 +38,7 @@ RUN mv /tmp/ssh_config ~/.ssh/config && \
     mv /tmp/yarn-site.xml $HADOOP_HOME/etc/hadoop/yarn-site.xml && \
     mv /tmp/slaves $HADOOP_HOME/etc/hadoop/slaves && \
     mv /tmp/start-hadoop.sh ~/start-hadoop.sh && \
-    mv /tmp/run-wordcount.sh ~/run-wordcount.sh && \
-    mv /tmp/run-wc.sh ~/run-wc.sh && \
+    mv /tmp/run_scraper.sh ~/run_scraper.sh && \
     mv /tmp/requirements.txt ~/requirements.txt && \
     mv /tmp/mapper.py ~/mapper.py && \
     mv /tmp/reducer.py ~/reducer.py && \
@@ -55,10 +54,9 @@ RUN apt-get install -y python3-pip && \
     python3.5 -m pip install -r requirements.txt
 
 RUN chmod +x ~/start-hadoop.sh && \
-    chmod +x ~/run-wordcount.sh && \
     chmod +x $HADOOP_HOME/sbin/start-dfs.sh && \
     chmod +x $HADOOP_HOME/sbin/start-yarn.sh && \
-    chmod +x ~/run-wc.sh && \
+    chmod +x ~/run_scraper.sh && \
     chmod +x ~/mapper.py && \
     chmod +x ~/reducer.py && \
     chmod +x ~/set_vars.sh
