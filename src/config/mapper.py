@@ -11,6 +11,22 @@ from os import listdir
 from os.path import isfile, join
 
 def findPlace(lat, lng, radius, kw, key):
+    """
+    Performs an API call
+
+    Parameters
+    ----------
+    lat : float
+        latitude value
+    lng : float
+        longitude value
+    radius : int
+        search radius value
+    kw : string
+        key word that is being searched (eg grocery)
+    key : str?
+        API authentication key
+    """
     #making the url
     AUTH_KEY = key #authentication key
     LOCATION = str(lat) + "," + str(lng) #location for url
@@ -28,6 +44,14 @@ def findPlace(lat, lng, radius, kw, key):
     return jsonData
 
 def abrvMapping(state):
+    """
+    Maps state names to abbreviations
+
+    Parameters
+    ----------
+    state : string
+        state name
+    """
     low = state.lower()
     retVal = ""
     if low == "alabama":
@@ -129,6 +153,14 @@ def abrvMapping(state):
     return retVal
 
 def iterJson(place):
+    """
+    Parses desired info from JSON return
+
+    Parameters
+    ----------
+    place : dictionary
+        returned JSON data
+    """
     temp = place['plus_code']['compound_code'].split(',')
     state = ""
     if len(temp[-1].lstrip()) > 2:
@@ -150,9 +182,10 @@ def iterJson(place):
     return x
 
 def scrapeData():
-    #credsfile = open("creds/creds.txt", "r")
-    #keyval = credsfile.read()
-    #keyval = os.environ.get("GOOGLE_KEY")
+    """
+    Controller for scraping data
+    """
+
     keyval = sys.argv[1]
     gplaces = []
     for line in sys.stdin:
