@@ -9,7 +9,7 @@ import os
 def main():
     #credsfile = open("creds/dbcreds.txt", "r")
     #key = os.environ.get("DB_KEY");
-    key = "mongodb+srv://skunz1:Octagon64@cs480kfp-xgix9.gcp.mongodb.net/test?retryWrites=true&w=majority"
+    key = sys.argv[1]
     client = pymongo.MongoClient(key, w=1)
     db = client.CS480KFP
     collection = db.stores
