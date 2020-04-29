@@ -23,8 +23,8 @@ echo "Starting hadoop scraping..."
 
 # run scraper
 hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar \
--file mapper.py -mapper "/usr/bin/python3.5 mapper.py" \
--file reducer.py -reducer "/usr/bin/python3.5 reducer.py" \
+-file mapper.py -mapper "/usr/bin/python3.5 mapper.py $GOOGLE_KEY" \
+-file reducer.py -reducer "/usr/bin/python3.5 reducer.py $DB_KEY" \
 -input coords/* -output output
 
 # print the output of wordcount

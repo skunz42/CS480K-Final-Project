@@ -153,7 +153,7 @@ def scrapeData():
     #credsfile = open("creds/creds.txt", "r")
     #keyval = credsfile.read()
     #keyval = os.environ.get("GOOGLE_KEY")
-    keyval = "AIzaSyDQH6WUI3xMglPlu-gD57K76HArBzIXy0g"
+    keyval = sys.argv[1]
     gplaces = []
     for line in sys.stdin:
         coords = eval(line)
