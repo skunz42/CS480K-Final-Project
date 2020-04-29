@@ -15,8 +15,6 @@ sudo docker run -itd \
                 --hostname hadoop-master \
                 kiwenlau/hadoop:1.0 &> /dev/null
 
-sudo docker cp ./config/dbcreds.txt hadoop-master:/root/dbcreds.txt
-
 # start hadoop slave container
 i=1
 while [ $i -lt $N ]

@@ -152,7 +152,8 @@ def iterJson(place):
 def scrapeData():
     #credsfile = open("creds/creds.txt", "r")
     #keyval = credsfile.read()
-    keyval = os.environ.get("GOOGLE_KEY")
+    #keyval = os.environ.get("GOOGLE_KEY")
+    keyval = "AIzaSyDQH6WUI3xMglPlu-gD57K76HArBzIXy0g"
     gplaces = []
     for line in sys.stdin:
         coords = eval(line)
@@ -164,20 +165,10 @@ def scrapeData():
     return gplaces
 
 def main():
-    #city, state = calcCityState()
-    city = "Binghamton"
-    state = "NY"
-    citystate = city + ", " + state
     stores = scrapeData()
     for s in stores:
-        #print(s)
         print(json.dumps(s))
 
 if __name__ == "__main__":
     main()
 
-'''
-
-for line in sys.stdin:
-    print("Hello")
-'''
