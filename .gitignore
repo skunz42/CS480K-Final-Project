@@ -2,3 +2,5 @@ creds.txt
 dbcreds.txt
 set_vars.sh
 hdfscreds.py
+jquery.min.js
+**/leaflet
