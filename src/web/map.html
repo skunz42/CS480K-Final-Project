@@ -1,0 +1,91 @@
+<html>
+<head>
+  <title>A Leaflet map!</title>
+  <link rel="stylesheet" href="./leaflet/leaflet.css"/>
+  <script src="./leaflet/leaflet.js"></script>
+  <script src="jquery.min.js"></script>
+</head>
+<body>
+  <div id="search city">
+    <input type="text" id="searchcityfield" />
+    <button type="button" id="searchcitybutton">Search</button>
+  </div>
+  <div id="map" style="width:800px; height: 500px;"></div>
+
+  <script>
+
+    var map = null;
+    var tweetslg = null;
+    // initialize the map
+    function initMap() {
+      var coords = [39.5, -98.35];
+      var zoomLevel = 3;
+
+      map = L.map('map').setView(coords, zoomLevel);
+
+      // load a tile layer
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        {
+          attribution: 'Tiles by <a href="openstreetmap.org">OSM</a>, Data by <a href="http://mass.gov/mgis">Sean Kunz</a>',
+          maxZoom: 15,
+          minZoom: 4
+        }).addTo(map);
+
+      tweetslg = new L.LayerGroup().addTo(map);
+
+      // ---- Query Fields ----
+
+      $("#searchcityfield").on('keypress', function (e) {
+        if (e.keyCode == 13)  {
+          getData($("#searchcityfield").val());
+          return false;
+        }
+      });
+
+      $("#searchcitybutton").on('click', function () {
+        console.log($("#searchcityfield").val());
+        getData($("#searchcityfield").val());
+      });
+      getData(null);
+    };
+
+    initMap();
+
+    function getData (terms) {
+      $.ajax({
+        'url' : 'http://localhost:8080/tweets',
+        'data' : {
+          'terms' : (terms ? terms : ' ')
+        },
+        'success' : function (res) {
+          if (res.err) {
+            console.log("Error occurred when querying tweets: " + data.message);
+          } else {
+            if (tweetslg) { tweetslg.clearLayers(); }
+            //console.log(res)
+            drawData(res);
+          }
+        }
+      });
+    };
+
+    function drawData (tweetList) {
+      $.each(tweetList, function (index, value) {
+        map.setView([tweetList[index]['Latitude'], tweetList[index]['Longitude']], 12);
+        var marker = new L.circleMarker(
+          [tweetList[index]['Latitude'], tweetList[index]['Longitude']],
+          {
+            radius: 5,
+            fillColor: "#58006c",
+            color: "#58006c",
+            weight: 2,
+            opacity: 0.5,
+            fillOpacity: 0.25,
+          });
+        tweetslg.addLayer(marker);
+      });
+    };
+
+  </script>
+</body>
+</html>
