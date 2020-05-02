@@ -71,17 +71,18 @@
 
     function drawData (tweetList) {
       $.each(tweetList, function (index, value) {
-        map.setView([tweetList[index]['Latitude'], tweetList[index]['Longitude']], 12);
-        var marker = new L.circleMarker(
+        map.setView([tweetList[index]['Latitude'], tweetList[index]['Longitude']], 13);
+        var marker = new L.circle(
           [tweetList[index]['Latitude'], tweetList[index]['Longitude']],
           {
-            radius: 5,
+            radius: 500,
             fillColor: "#58006c",
             color: "#58006c",
             weight: 2,
             opacity: 0.5,
             fillOpacity: 0.25,
           });
+        marker.bindPopup(tweetList[index]['Name']);
         tweetslg.addLayer(marker);
       });
     };

@@ -25,7 +25,8 @@ var router = function(request, response) {
 var stores = function (request, response) {
     var reqURI = url.parse("http://" + request.headers.host + request.url);
     var params = reqURI.query;
-    var terms = params.substr(params.indexOf('=') + 1);
+    var tms = params.substr(params.indexOf('=') + 1);
+    var terms = tms.replace("%20", " ");
     console.log(terms)
     var MongoClient = require('mongodb').MongoClient;
     MongoClient.connect("mongodb://localhost", function(err, client) {
