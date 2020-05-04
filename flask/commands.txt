@@ -1,4 +1,0 @@
-pip3 install Flask
-
-export FLASK_APP=server.py
-flask run
